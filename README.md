@@ -2,12 +2,12 @@
 
 Приложение для записи тренировок
 
-Flutter: 3.27.4
+Flutter: 3.27.4  
 Dart: 3.6.2
 ### Стек разработки
-StateManagment: Notifier;
-Навигация: Navigation 2.0;
-База данный: Sqflite;
+StateManagment: Notifier;  
+Навигация: Navigation 2.0;  
+База данный: Sqflite;  
 
 ## Open Sourse проект по добровольной разработке
 
