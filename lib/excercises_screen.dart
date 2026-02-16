@@ -2,12 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:training_note/exercise_create.dart';
-
-final excercisesStub = [
-  "Отжимания",
-  "Подтягивания",
-  "Приседания",
-];
+import 'package:training_note/models/exercise.dart';
 
 class ExcercisesScreen extends StatefulWidget {
   const ExcercisesScreen({super.key});
@@ -26,7 +21,7 @@ class _ExcercisesScreenState extends State<ExcercisesScreen> {
         itemBuilder: (context, index) => Card(
           child: Padding(
             padding: const EdgeInsets.all(16),
-            child: Text(excercisesStub[index]),
+            child: Text(excercisesStub[index].exerciseName),
           ),
         ),
       ),
