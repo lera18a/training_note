@@ -1,7 +1,7 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import 'package:training_note/exercises_create.dart';
+import 'package:training_note/exercise_create.dart';
 
 final excercisesStub = [
   "Отжимания",
@@ -33,9 +33,12 @@ class _ExcercisesScreenState extends State<ExcercisesScreen> {
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
           log('excercise add');
-          await showDialog(
-              context: context, builder: (context) => ExercisesCreate());
-          setState(() {});
+          final result = await showDialog(
+              context: context, builder: (context) => ExerciseCreate());
+          if (result == null) return;
+          setState(() {
+            excercisesStub.add(result);
+          });
         },
         child: Icon(Icons.add),
       ),
