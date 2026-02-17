@@ -1,23 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:training_note/common/my_elevated.dart';
-import 'package:training_note/excercises_screen.dart';
 
-class ExercisesCreate extends StatefulWidget {
-  const ExercisesCreate({super.key});
+class ExerciseCreate extends StatefulWidget {
+  const ExerciseCreate({super.key});
 
   @override
-  State<ExercisesCreate> createState() => _ExercisesCreateState();
+  State<ExerciseCreate> createState() => _ExerciseCreateState();
 }
 
-class _ExercisesCreateState extends State<ExercisesCreate> {
+class _ExerciseCreateState extends State<ExerciseCreate> {
   final TextEditingController _textController = TextEditingController();
+
+  @override
+  void dispose() {
+    _textController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
       title: TextField(
         controller: _textController,
-        decoration: InputDecoration(hintText: 'Создать тренировку'),
+        decoration: InputDecoration(hintText: 'Создать упражнение'),
       ),
       actions: [
         MyElevated.cancel(
@@ -26,9 +31,9 @@ class _ExercisesCreateState extends State<ExercisesCreate> {
         MyElevated.create(
           onPressed: () {
             setState(() {
-              excercisesStub.add(_textController.text);
-              _textController.clear();
-              Navigator.pop(context);
+              final text = _textController.text;
+              if (text.isEmpty) return;
+              Navigator.pop(context, text);
             });
           },
         ),
