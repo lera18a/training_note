@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:training_note/common/my_elevated.dart';
+import 'package:training_note/models/exercise.dart';
 
 class ExerciseCreate extends StatefulWidget {
   const ExerciseCreate({super.key});
@@ -31,9 +32,9 @@ class _ExerciseCreateState extends State<ExerciseCreate> {
         MyElevated.create(
           onPressed: () {
             setState(() {
-              final text = _textController.text;
-              if (text.isEmpty) return;
-              Navigator.pop(context, text);
+              final name = _textController.text;
+              if (name.isEmpty) return;
+              Navigator.pop(context, Exercise(exerciseName: name));
             });
           },
         ),

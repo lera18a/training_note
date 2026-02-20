@@ -12,15 +12,29 @@ class MyElevated extends StatelessWidget {
   final String text;
   final void Function()? onPressed;
 
-  const MyElevated.create({super.key, this.onPressed})
-      : foregroundColor = Colors.white,
-        backgroundColor = Colors.deepPurple,
+  const MyElevated.create({
+    super.key,
+    this.onPressed,
+  })  : foregroundColor = Colors.white,
+        backgroundColor = Colors.green,
         text = 'Создать';
   const MyElevated.cancel({super.key, this.onPressed})
       : foregroundColor = Colors.white,
-        backgroundColor = Colors.red,
+        backgroundColor = Colors.grey,
         text = 'Отмена';
 
+  const MyElevated.delete({
+    super.key,
+    this.onPressed,
+  })  : foregroundColor = Colors.white,
+        backgroundColor = Colors.red,
+        text = 'Удалить';
+  const MyElevated.close({
+    super.key,
+    this.onPressed,
+  })  : foregroundColor = Colors.white,
+        backgroundColor = Colors.blueGrey,
+        text = 'Закрыть';
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
