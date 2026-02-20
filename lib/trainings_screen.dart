@@ -2,11 +2,13 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:training_note/date_formating_extension.dart';
-import 'package:training_note/training_details.dart';
-import 'package:training_note/models/trainings.dart';
+import 'package:training_note/training_details_screen.dart';
+import 'package:training_note/models/training.dart';
 
 class TrainingsScreen extends StatelessWidget {
-  const TrainingsScreen({super.key});
+  const TrainingsScreen({
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +21,7 @@ class TrainingsScreen extends StatelessWidget {
             Navigator.push(
                 context,
                 MaterialPageRoute<void>(
-                    builder: (context) => TrainingDetails(
+                    builder: (context) => TrainingDetailsScreen(
                           trainings: trainings[index],
                         )));
           },
@@ -29,7 +31,13 @@ class TrainingsScreen extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text('${trainings[index].date.formatData()} подходов'),
+                    Text(
+                        'Дата тренировки: ${trainings[index].date.formatData()}'),
+                    SizedBox(
+                      height: 8,
+                    ),
+                    Text(
+                        'Количество подходов: ${trainings[index].approach.length}'),
                   ],
                 )),
           ),

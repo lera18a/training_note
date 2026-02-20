@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:training_note/date_formating_extension.dart';
-import 'package:training_note/models/trainings.dart';
+import 'package:training_note/models/training.dart';
 
-class TrainingDetails extends StatelessWidget {
-  const TrainingDetails({super.key, required this.trainings});
+class TrainingDetailsScreen extends StatelessWidget {
+  const TrainingDetailsScreen({super.key, required this.trainings});
 
-  final Trainings trainings;
+  final Training trainings;
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +28,7 @@ class TrainingDetails extends StatelessWidget {
                       style: TextStyle(fontSize: 16),
                     ),
                     Text(
-                      e.repeats.toString(),
+                      '${e.repeats} повторений',
                       style: TextStyle(fontSize: 16),
                     ),
                   ],
