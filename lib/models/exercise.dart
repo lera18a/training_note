@@ -15,7 +15,7 @@ class Exercise {
 }
 
 final List<Exercise> excercisesStub = [
-  Exercise(name: "Отжимания", id: ''),
-  Exercise(name: "Подтягивания", id: ''),
-  Exercise(name: "Приседания", id: ''),
+  Exercise(name: "Отжимания", id: 'a'),
+  Exercise(name: "Подтягивания", id: 's'),
+  Exercise(name: "Приседания", id: 'd'),
 ];
