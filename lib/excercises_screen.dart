@@ -34,7 +34,7 @@ class _ExcercisesScreenState extends State<ExcercisesScreen> {
           child: Card(
             child: Padding(
               padding: const EdgeInsets.all(16),
-              child: Text(excercisesStub[index].exerciseName),
+              child: Text(excercisesStub[index].name),
             ),
           ),
         ),
