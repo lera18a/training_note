@@ -11,17 +11,18 @@ class ExercisesViewModel extends ValueNotifier<List<Exercise>> {
     value = [...value, newExercise];
   }
 
-  void update(int index, String newName) {
+  void updateExercise(String id, String newName) {
+    final index = value.indexWhere((e) => e.id == id);
     final updated = value[index].copyWith(name: newName);
     final newList = [...value];
     newList[index] = updated;
     value = newList;
   }
 
-  void delete(int index) {
-    final newList = [...value]..removeAt(index);
-    value = newList;
+  void deleteExercise(String id) {
+    value = value.where((e) => e.id != id).toList();
   }
 }
 
-final ExercisesViewModel exercisesViewModel = ExercisesViewModel([]);
+final ExercisesViewModel exercisesViewModel =
+    ExercisesViewModel(excercisesStub);
