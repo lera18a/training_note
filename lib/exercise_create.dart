@@ -34,7 +34,7 @@ class _ExerciseCreateState extends State<ExerciseCreate> {
             setState(() {
               final name = _textController.text;
               if (name.isEmpty) return;
-              Navigator.pop(context, Exercise(exerciseName: name));
+              Navigator.pop(context, Exercise(name: name));
             });
           },
         ),

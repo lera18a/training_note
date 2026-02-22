@@ -15,7 +15,7 @@ class ExerciseEdit extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      content: Text(exercise.exerciseName),
+      content: Text(exercise.name),
       actions: [
         MyElevated.close(
           onPressed: () => Navigator.pop(context),

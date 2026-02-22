@@ -1,13 +1,13 @@
 class Exercise {
-  final String exerciseName;
+  final String name;
 
   Exercise({
-    required this.exerciseName,
+    required this.name,
   });
 }
 
 final List<Exercise> excercisesStub = [
-  Exercise(exerciseName: "Отжимания"),
-  Exercise(exerciseName: "Подтягивания"),
-  Exercise(exerciseName: "Приседания"),
+  Exercise(name: "Отжимания"),
+  Exercise(name: "Подтягивания"),
+  Exercise(name: "Приседания"),
 ];
