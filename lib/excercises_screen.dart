@@ -2,6 +2,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:training_note/exercise_create.dart';
 import 'package:training_note/exercise_edit.dart';
+import 'package:training_note/models/exercise.dart';
 import 'package:training_note/view_models/exercises_view_model.dart';
 
 class ExcercisesScreen extends StatelessWidget {
@@ -10,7 +11,7 @@ class ExcercisesScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: ValueListenableBuilder(
+      body: ValueListenableBuilder<List<Exercise>>(
           valueListenable: exercisesViewModel,
           builder: (context, value, child) {
             return ListView.separated(
