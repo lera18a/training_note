@@ -2,8 +2,8 @@
 
 Приложение для записи тренировок
 
-Flutter: 3.27.4  
-Dart: 3.6.2
+Flutter: 3.38.1  
+Dart: 3.10.0
 ### Стек разработки
 StateManagment: Notifier;  
 Навигация: Navigation 2.0;  
