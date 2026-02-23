@@ -11,8 +11,8 @@ class DropDownExercises extends StatefulWidget {
       required this.onChanged,
       required this.repeatsController});
   final TextEditingController repeatsController;
-  final String? dropdownValue;
-  final ValueChanged<String?>? onChanged;
+  final int? dropdownValue;
+  final ValueChanged<int?>? onChanged;
   @override
   State<DropDownExercises> createState() => _DropDownExercisesState();
 }
@@ -38,7 +38,7 @@ class _DropDownExercisesState extends State<DropDownExercises> {
             children: [
               Expanded(
                 flex: 3,
-                child: DropdownButtonFormField<String>(
+                child: DropdownButtonFormField<int>(
                   menuMaxHeight: 250,
                   initialValue: widget.dropdownValue,
                   isExpanded: true,
@@ -49,9 +49,9 @@ class _DropDownExercisesState extends State<DropDownExercises> {
                   icon: Icon(CupertinoIcons.arrow_down),
                   style: const TextStyle(color: Colors.black, fontSize: 18),
                   items: value
-                      .map((e) => DropdownMenuItem<String>(
+                      .map((e) => DropdownMenuItem<int>(
                             value: e.id,
-                            child: Text(e.name),
+                            child: Text(e.name.toString()),
                           ))
                       .toList(),
                   onChanged: widget.onChanged,

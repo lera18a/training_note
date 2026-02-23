@@ -15,7 +15,7 @@ class _EmptyTrainingState extends State<EmptyTraining> {
   TextEditingController repeatsController1 = TextEditingController();
   TextEditingController repeatsController2 = TextEditingController();
   TextEditingController repeatsController3 = TextEditingController();
-  final selected = List<String?>.filled(3, null);
+  final selected = List<int?>.filled(3, null);
 
   @override
   void dispose() {
@@ -30,13 +30,8 @@ class _EmptyTrainingState extends State<EmptyTraining> {
     return Scaffold(
         appBar: AppBar(
           iconTheme: IconThemeData(),
-          title: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              Text(DateTime.now().formatData()),
-              Icon(CupertinoIcons.calendar)
-            ],
-          ),
+          actions: [Icon(CupertinoIcons.calendar)],
+          title: Text(DateTime.now().formatData()),
         ),
         body: Padding(
           padding: EdgeInsets.all(16),
@@ -45,7 +40,7 @@ class _EmptyTrainingState extends State<EmptyTraining> {
               DropDownExercises(
                 repeatsController: repeatsController1,
                 dropdownValue: selected[0],
-                onChanged: (String? value) {
+                onChanged: (int? value) {
                   setState(() {
                     selected[0] = value;
                   });
@@ -54,7 +49,7 @@ class _EmptyTrainingState extends State<EmptyTraining> {
               DropDownExercises(
                 repeatsController: repeatsController2,
                 dropdownValue: selected[1],
-                onChanged: (String? value) {
+                onChanged: (int? value) {
                   setState(() {
                     selected[1] = value;
                   });
@@ -63,7 +58,7 @@ class _EmptyTrainingState extends State<EmptyTraining> {
               DropDownExercises(
                 repeatsController: repeatsController3,
                 dropdownValue: selected[2],
-                onChanged: (String? value) {
+                onChanged: (int? value) {
                   setState(() {
                     selected[2] = value;
                   });
