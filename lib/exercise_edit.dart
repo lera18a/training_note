@@ -2,29 +2,63 @@ import 'package:flutter/material.dart';
 import 'package:training_note/common/my_elevated.dart';
 import 'package:training_note/models/exercise.dart';
 
-class ExerciseEdit extends StatelessWidget {
+class ExerciseEdit extends StatefulWidget {
   const ExerciseEdit({
     super.key,
     required this.exercise,
     required this.onDelete,
+    required this.onUpdate,
   });
 
   final Exercise exercise;
   final void Function() onDelete;
+  final void Function(String newName) onUpdate;
+
+  @override
+  State<ExerciseEdit> createState() => _ExerciseEditState();
+}
+
+class _ExerciseEditState extends State<ExerciseEdit> {
+  TextEditingController controller = TextEditingController();
+
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      content: Text(exercise.name),
-      actions: [
-        MyElevated.close(
-          onPressed: () => Navigator.pop(context),
+      content: TextField(
+        controller: controller,
+        decoration: InputDecoration(
+          hintText: (widget.exercise.name),
         ),
-        MyElevated.delete(
-          onPressed: () {
-            onDelete();
-            Navigator.pop(context);
-          },
+      ),
+      actions: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            MyElevated.close(
+              onPressed: () => Navigator.pop(context),
+            ),
+            MyElevated.delete(
+              onPressed: () {
+                widget.onDelete();
+                Navigator.pop(context);
+              },
+            ),
+          ],
+        ),
+        Center(
+          child: MyElevated.update(
+            onPressed: () {
+              final name = controller.text;
+              widget.onUpdate(name);
+              Navigator.pop(context);
+            },
+          ),
         ),
       ],
     );
