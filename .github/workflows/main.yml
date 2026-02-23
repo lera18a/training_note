@@ -27,8 +27,7 @@ jobs:
     # Statically analyze the Dart code for any errors.
     # - run: flutter analyze .
     
-    # Run widget tests for our flutter project.
-    # - run: flutter test
+    - run: flutter test
     - run: flutter build apk --debug
     - name: upload apk
       uses: actions/upload-artifact@v4
