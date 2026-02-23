@@ -35,6 +35,12 @@ class MyElevated extends StatelessWidget {
   })  : foregroundColor = Colors.white,
         backgroundColor = Colors.blueGrey,
         text = 'Закрыть';
+  const MyElevated.update({
+    super.key,
+    this.onPressed,
+  })  : foregroundColor = Colors.white,
+        backgroundColor = Colors.blueAccent,
+        text = 'Обновить';
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
