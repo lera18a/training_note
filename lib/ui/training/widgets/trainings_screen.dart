@@ -37,18 +37,6 @@ class _TrainingsScreenState extends State<TrainingsScreen> {
                                     )));
                         setState(() {});
                       },
-                      // onLongPress: () async {
-                      //   await showDialog(
-                      //       context: context,
-                      //       builder: (context) => DeleteTrainingDialog(
-                      //             training: value[index],
-                      //             onDelete: () {
-                      //               trainingsScreenViewModel
-                      //                   .deleteTraining(value[index].id);
-                      //             },
-                      //           ));
-                      //   setState(() {});
-                      // },
                       child: Card(
                         child: Padding(
                             padding: const EdgeInsets.all(16),

@@ -12,6 +12,11 @@ class TrainingDetailsScreen extends StatelessWidget {
   final Training training;
 
   @override
+  State<TrainingDetailsScreen> createState() => _TrainingDetailsScreenState();
+}
+
+class _TrainingDetailsScreenState extends State<TrainingDetailsScreen> {
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
