@@ -8,7 +8,7 @@ on:
     branches: [ master ]
     
 jobs:
-  build:
+  prepare:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
@@ -21,6 +21,11 @@ jobs:
       with:
         flutter-version: '3.38.1'
     - run: flutter pub get
+  build:
+    runs-on: ubuntu-latest
+    needs: prepare 
+    steps:
+
     # Check for any formatting issues in the code.
     # - run: flutter format --set-exit-if-changed .
     
@@ -34,3 +39,8 @@ jobs:
       with:
         name: debug-apk.apk
         path: build/app/outputs/apk/debug/*.apk
+  golden:
+    runs-on: ubuntu-latest
+    needs: prepare
+    steps:
+      - run: flutter test
