@@ -8,10 +8,14 @@ class DropDownExercises extends StatefulWidget {
       {super.key,
       required this.dropdownValue,
       required this.onChanged,
-      required this.repeatsController});
+      required this.repeatsController,
+      required this.listIDs,
+      required this.currentIndex});
   final TextEditingController repeatsController;
   final int? dropdownValue;
   final ValueChanged<int?>? onChanged;
+  final List<int?> listIDs;
+  final int currentIndex;
   @override
   State<DropDownExercises> createState() => _DropDownExercisesState();
 }
@@ -29,6 +33,10 @@ class _DropDownExercisesState extends State<DropDownExercises> {
               children: [Text('Нет упражнений')],
             );
           }
+          final filter = value.where((exercise) {
+            if (exercise.id == widget.dropdownValue) return true;
+            return !widget.listIDs.contains(exercise.id);
+          }).toList();
           widget.dropdownValue != null &&
                   value.any((e) => e.id == widget.dropdownValue)
               ? widget.dropdownValue
@@ -47,7 +55,7 @@ class _DropDownExercisesState extends State<DropDownExercises> {
                   ),
                   icon: Icon(Icons.keyboard_arrow_down_outlined),
                   style: const TextStyle(color: Colors.black, fontSize: 18),
-                  items: value
+                  items: filter
                       .map((e) => DropdownMenuItem<int>(
                             value: e.id,
                             child: Text(e.name.toString()),
