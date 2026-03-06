@@ -78,20 +78,18 @@ class _CreateTrainingState extends State<CreateTraining> {
                 BuildContext context,
                 int index,
               ) {
-                return Expanded(
-                  child: DropDownExercises(
-                    repeatsController: controllers[index],
-                    dropdownValue: selected[index],
-                    onChanged: (int? value) {
-                      setState(
-                        () {
-                          selected[index] = value;
-                        },
-                      );
-                    },
-                    listIDs: selected,
-                    currentIndex: index,
-                  ),
+                return DropDownExercises(
+                  repeatsController: controllers[index],
+                  dropdownValue: selected[index],
+                  onChanged: (int? value) {
+                    setState(
+                      () {
+                        selected[index] = value;
+                      },
+                    );
+                  },
+                  listIDs: selected,
+                  currentIndex: index,
                 );
               }),
         ));
