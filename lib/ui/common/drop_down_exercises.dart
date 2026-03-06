@@ -33,15 +33,12 @@ class _DropDownExercisesState extends State<DropDownExercises> {
               children: [Text('Нет упражнений')],
             );
           }
-          final filter = value.where((exercise) {
-            if (exercise.id == widget.dropdownValue) return true;
-            return !widget.listIDs.contains(exercise.id);
-          }).toList();
           widget.dropdownValue != null &&
                   value.any((e) => e.id == widget.dropdownValue)
               ? widget.dropdownValue
               : value.first.id;
           return Row(
+            mainAxisSize: MainAxisSize.min,
             children: [
               Expanded(
                 flex: 3,
@@ -55,7 +52,7 @@ class _DropDownExercisesState extends State<DropDownExercises> {
                   ),
                   icon: Icon(Icons.keyboard_arrow_down_outlined),
                   style: const TextStyle(color: Colors.black, fontSize: 18),
-                  items: filter
+                  items: value
                       .map((e) => DropdownMenuItem<int>(
                             value: e.id,
                             child: Text(e.name.toString()),
