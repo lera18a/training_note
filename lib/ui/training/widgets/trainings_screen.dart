@@ -36,6 +36,8 @@ class _TrainingsScreenState extends State<TrainingsScreen> {
                             MaterialPageRoute<void>(
                                 builder: (context) => TrainingDetailsScreen(
                                       training: value[index],
+                                      trainingsScreenViewModel:
+                                          trainingsScreenViewModel,
                                     )));
                         setState(() {});
                       },

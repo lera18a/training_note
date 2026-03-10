@@ -19,19 +19,34 @@ class CreateTraining extends StatefulWidget {
 
 class _CreateTrainingState extends State<CreateTraining> {
   final createTrainingVM = CreateTrainingViewModel();
+
   final exercisesScreenViewModel = ExercisesScreenViewModel(excercisesStub);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         floatingActionButton: FloatingActionButton(
-            child: Icon(Icons.add),
-            onPressed: () {
-              Navigator.pop(context);
-            }),
+          onPressed: createTrainingVM.addTrainingEntry,
+          child: Icon(Icons.add),
+        ),
         appBar: AppBar(
           iconTheme: IconThemeData(),
-          actions: [Icon(Icons.calendar_today)],
+          actions: [
+            IconButton(
+              onPressed: () {
+                //будет открывать DatePickerDialog
+              },
+              icon: Icon(Icons.calendar_today),
+            ),
+            IconButton(
+              onPressed: () {
+                createTrainingVM.save();
+                widget.trainingSreeenViewModel.value = trainings.toList();
+                Navigator.pop(context);
+              },
+              icon: Icon(Icons.file_download),
+            ),
+          ],
           title: Text(DateTime.now().formatData()),
         ),
         body: Padding(

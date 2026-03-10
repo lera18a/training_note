@@ -7,17 +7,11 @@ class TrainingDetailsScreen extends StatelessWidget {
   const TrainingDetailsScreen({
     super.key,
     required this.training,
+    required this.trainingsScreenViewModel,
   });
-
+  final TrainingsScreenViewModel trainingsScreenViewModel;
   final Training training;
 
-  @override
-  State<TrainingDetailsScreen> createState() => _TrainingDetailsScreenState();
-}
-
-class _TrainingDetailsScreenState extends State<TrainingDetailsScreen> {
-  final TrainingsScreenViewModel trainingsScreenViewModel =
-      TrainingsScreenViewModel(trainings);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
