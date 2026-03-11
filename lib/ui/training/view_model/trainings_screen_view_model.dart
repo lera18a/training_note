@@ -11,6 +11,9 @@ class TrainingsScreenViewModel extends ValueNotifier<List<Training>> {
     value = [...value, newTraining];
   }
 
+  void addTraining(Training training) {
+    value = [...value, training];
+  }
   // void updateTraining(DateTime date, List<Approach> approach, int id) {
   //   final index = value.indexWhere((e) => e.id == id);
   //.  approach еще обновить
@@ -24,6 +27,3 @@ class TrainingsScreenViewModel extends ValueNotifier<List<Training>> {
     value = value.where((e) => e.id != id).toList();
   }
 }
-
-final TrainingsScreenViewModel trainingsScreenViewModel =
-    TrainingsScreenViewModel(trainings);

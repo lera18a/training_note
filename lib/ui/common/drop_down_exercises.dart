@@ -3,24 +3,28 @@ import 'package:flutter/services.dart';
 import 'package:training_note/domain/models/exercise.dart';
 import 'package:training_note/ui/exercise/view_models/exercises_screen_view_model.dart';
 
-class DropDownExercises extends StatefulWidget {
-  const DropDownExercises(
-      {super.key,
-      required this.dropdownValue,
-      required this.onChanged,
-      required this.repeatsController});
-  final TextEditingController repeatsController;
-  final int? dropdownValue;
-  final ValueChanged<int?>? onChanged;
-  @override
-  State<DropDownExercises> createState() => _DropDownExercisesState();
-}
+class DropDownExercises extends StatelessWidget {
+  const DropDownExercises({
+    super.key,
+    required this.repeats,
+    required this.onRepeatsChanged,
+    this.selectedExerciseId,
+    required this.onExerciseChanged,
+    required this.onRemove,
+  });
 
-class _DropDownExercisesState extends State<DropDownExercises> {
+  final int repeats;
+  final Function(int) onRepeatsChanged;
+  final int? selectedExerciseId;
+  final Function(int?) onExerciseChanged;
+  final void Function() onRemove;
+
   @override
   Widget build(BuildContext context) {
+    final ExercisesScreenViewModel exercisesScreenViewModel =
+        ExercisesScreenViewModel(excercisesStub);
     return ValueListenableBuilder<List<Exercise>>(
-        valueListenable: exercisesViewModel,
+        valueListenable: exercisesScreenViewModel,
         builder: (context, value, a) {
           if (value.isEmpty) {
             return Column(
@@ -29,17 +33,14 @@ class _DropDownExercisesState extends State<DropDownExercises> {
               children: [Text('Нет упражнений')],
             );
           }
-          widget.dropdownValue != null &&
-                  value.any((e) => e.id == widget.dropdownValue)
-              ? widget.dropdownValue
-              : value.first.id;
           return Row(
+            mainAxisSize: MainAxisSize.min,
             children: [
               Expanded(
                 flex: 3,
                 child: DropdownButtonFormField<int>(
                   menuMaxHeight: 250,
-                  initialValue: widget.dropdownValue,
+                  initialValue: selectedExerciseId,
                   isExpanded: true,
                   decoration: InputDecoration(
                     contentPadding:
@@ -53,7 +54,7 @@ class _DropDownExercisesState extends State<DropDownExercises> {
                             child: Text(e.name.toString()),
                           ))
                       .toList(),
-                  onChanged: widget.onChanged,
+                  onChanged: onExerciseChanged,
                 ),
               ),
               SizedBox(
@@ -61,17 +62,25 @@ class _DropDownExercisesState extends State<DropDownExercises> {
               ),
               Expanded(
                 flex: 2,
-                child: TextField(
-                  controller: widget.repeatsController,
-                  keyboardType: TextInputType.number,
-                  inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                  decoration: InputDecoration(
-                    hintText: 'Повторений',
-                    hintStyle:
-                        const TextStyle(color: Colors.black, fontSize: 18),
-                  ),
+                child: TextFormField(
+                    initialValue: repeats > 0 ? repeats.toString() : '',
+                    keyboardType: TextInputType.number,
+                    inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                    decoration: InputDecoration(
+                      hintText: 'Повторений',
+                      hintStyle:
+                          const TextStyle(color: Colors.black, fontSize: 18),
+                    ),
+                    onChanged: (value) {
+                      onRepeatsChanged(int.tryParse(value) ?? 0);
+                    }),
+              ),
+              IconButton(
+                icon: Icon(
+                  Icons.remove,
                 ),
-              )
+                onPressed: onRemove,
+              ),
             ],
           );
         });

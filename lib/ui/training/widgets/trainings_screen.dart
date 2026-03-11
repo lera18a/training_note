@@ -1,5 +1,5 @@
-import 'dart:developer';
 import 'package:flutter/material.dart';
+import 'package:training_note/domain/models/training.dart';
 import 'package:training_note/ui/common/empty_screen.dart';
 import 'package:training_note/ui/common/date_formating_extension.dart';
 import 'package:training_note/ui/training/view_model/trainings_screen_view_model.dart';
@@ -16,6 +16,8 @@ class TrainingsScreen extends StatefulWidget {
 }
 
 class _TrainingsScreenState extends State<TrainingsScreen> {
+  final TrainingsScreenViewModel trainingsScreenViewModel =
+      TrainingsScreenViewModel(trainings);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,21 +36,11 @@ class _TrainingsScreenState extends State<TrainingsScreen> {
                             MaterialPageRoute<void>(
                                 builder: (context) => TrainingDetailsScreen(
                                       training: value[index],
+                                      trainingsScreenViewModel:
+                                          trainingsScreenViewModel,
                                     )));
                         setState(() {});
                       },
-                      // onLongPress: () async {
-                      //   await showDialog(
-                      //       context: context,
-                      //       builder: (context) => DeleteTrainingDialog(
-                      //             training: value[index],
-                      //             onDelete: () {
-                      //               trainingsScreenViewModel
-                      //                   .deleteTraining(value[index].id);
-                      //             },
-                      //           ));
-                      //   setState(() {});
-                      // },
                       child: Card(
                         child: Padding(
                             padding: const EdgeInsets.all(16),
@@ -70,15 +62,13 @@ class _TrainingsScreenState extends State<TrainingsScreen> {
           }),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.of(context)
-              .push(MaterialPageRoute(builder: (_) => CreateTraining()));
+          Navigator.of(context).push(MaterialPageRoute(
+              builder: (_) => CreateTraining(
+                    trainingSreeenViewModel: trainingsScreenViewModel,
+                  )));
         },
         child: Icon(Icons.add),
       ),
     );
-  }
-
-  void add() {
-    log('trainings add');
   }
 }

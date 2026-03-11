@@ -7,8 +7,9 @@ class TrainingDetailsScreen extends StatelessWidget {
   const TrainingDetailsScreen({
     super.key,
     required this.training,
+    required this.trainingsScreenViewModel,
   });
-
+  final TrainingsScreenViewModel trainingsScreenViewModel;
   final Training training;
 
   @override
