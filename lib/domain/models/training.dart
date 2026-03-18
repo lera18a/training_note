@@ -16,5 +16,3 @@ class Training {
         id: id ?? this.id);
   }
 }
-
-final List<Training> trainings = [];

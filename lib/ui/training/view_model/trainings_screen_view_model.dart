@@ -3,7 +3,7 @@ import 'package:training_note/domain/models/approach.dart';
 import 'package:training_note/domain/models/training.dart';
 
 class TrainingsScreenViewModel extends ValueNotifier<List<Training>> {
-  TrainingsScreenViewModel(List<Training>? trainings) : super(trainings ?? []);
+  TrainingsScreenViewModel(super._value);
 
   void createTrainigs(DateTime date, List<Approach> approach) {
     final newTraining = Training(

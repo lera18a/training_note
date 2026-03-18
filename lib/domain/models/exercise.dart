@@ -13,5 +13,3 @@ class Exercise {
     return Exercise(name: name ?? this.name, id: id ?? this.id);
   }
 }
-
-final List<Exercise> excercisesStub = [];

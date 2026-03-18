@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:training_note/domain/models/training.dart';
 import 'package:training_note/ui/common/dismiss_widget.dart';
 import 'package:training_note/ui/common/drop_down_exercises.dart';
 import 'package:training_note/ui/common/date_formating_extension.dart';
@@ -15,9 +14,11 @@ class CreateTraining extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final CreateTrainingViewModel createTrainingViewModel =
+        CreateTrainingViewModel();
     return Scaffold(
         floatingActionButton: FloatingActionButton(
-          onPressed: createTrainingVM.addTrainingEntry,
+          onPressed: createTrainingViewModel.addTrainingEntry,
           child: Icon(Icons.add),
         ),
         appBar: AppBar(
@@ -31,8 +32,9 @@ class CreateTraining extends StatelessWidget {
             ),
             IconButton(
               onPressed: () {
-                createTrainingVM.save();
-                trainingsScreenViewModel.value = trainings.toList();
+                createTrainingViewModel.save();
+                trainingsScreenViewModel.value =
+                    trainingsScreenViewModel.value.toList();
                 Navigator.pop(context);
               },
               icon: Icon(Icons.file_download),
@@ -43,18 +45,18 @@ class CreateTraining extends StatelessWidget {
         body: Padding(
           padding: EdgeInsets.all(16),
           child: ListenableBuilder(
-              listenable: createTrainingVM,
+              listenable: createTrainingViewModel,
               builder: (context, child) {
                 return ListView.builder(
-                    itemCount: createTrainingVM.entries.length,
+                    itemCount: createTrainingViewModel.entries.length,
                     itemBuilder: (
                       BuildContext context,
                       int index,
                     ) {
-                      final entry = createTrainingVM.entries[index];
+                      final entry = createTrainingViewModel.entries[index];
                       return DismissWidget(
                         delete: (f) =>
-                            createTrainingVM.removeTrainingEntry(index),
+                            createTrainingViewModel.removeTrainingEntry(index),
                         childKey: UniqueKey(),
                         child: Padding(
                           padding: EdgeInsets.symmetric(vertical: 8),
@@ -63,7 +65,7 @@ class CreateTraining extends StatelessWidget {
                             selectedExerciseId: entry.excercise?.id,
                             onRepeatsChanged: (int repeats) {
                               if (entry.excercise != null) {
-                                createTrainingVM.setTrainingEntry(
+                                createTrainingViewModel.setTrainingEntry(
                                     entry.excercise!, repeats, index);
                               } else {
                                 return entry.repeats = repeats;
@@ -73,7 +75,7 @@ class CreateTraining extends StatelessWidget {
                               if (exerciseID == null) return;
                               final exercise = exercisesScreenViewModel.value
                                   .firstWhere((e) => e.id == exerciseID);
-                              createTrainingVM.setTrainingEntry(
+                              createTrainingViewModel.setTrainingEntry(
                                   exercise, entry.repeats ?? 0, index);
                             },
                           ),
