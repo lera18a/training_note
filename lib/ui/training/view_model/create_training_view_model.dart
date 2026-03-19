@@ -3,6 +3,7 @@ import 'package:training_note/domain/models/approach.dart';
 import 'package:training_note/domain/models/exercise.dart';
 import 'package:training_note/domain/models/training.dart';
 import 'package:training_note/ui/training/models/training_entry.dart';
+import 'package:training_note/ui/training/view_model/trainings_screen_view_model.dart';
 
 class CreateTrainingViewModel extends ChangeNotifier {
   CreateTrainingViewModel() {
@@ -54,7 +55,7 @@ class CreateTrainingViewModel extends ChangeNotifier {
   void save() {
     final training = _create();
     if (training != null) {
-      trainings.add(training);
+      trainingsScreenViewModel.value.add(training);
     }
   }
 }
