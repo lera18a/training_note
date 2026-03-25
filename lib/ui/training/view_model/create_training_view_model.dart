@@ -1,4 +1,6 @@
+import 'package:drift/drift.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:training_note/data/database.dart';
 import 'package:training_note/domain/models/approach.dart';
 import 'package:training_note/domain/models/exercise.dart';
 import 'package:training_note/domain/models/training.dart';
@@ -6,56 +8,75 @@ import 'package:training_note/ui/training/models/training_entry.dart';
 import 'package:training_note/ui/training/view_model/trainings_screen_view_model.dart';
 
 class CreateTrainingViewModel extends ChangeNotifier {
-  CreateTrainingViewModel() {
+  CreateTrainingViewModel(this.database) {
     addTrainingEntry();
   }
+  final AppDatabase database;
   final List<TrainingEntry> _entries = [];
 
 //установить упражнение и повторения по индексу
-  void setTrainingEntry(Exercise exercise, int repeats, int index) {
+  Future<void> setTrainingEntry(
+      Exercise exercise, int repeats, int index) async {
     _entries[index] = TrainingEntry(excercise: exercise, repeats: repeats);
     notifyListeners();
   }
 
-//добавть drop
-  void addTrainingEntry() {
+//добавить пустую тренировку(drop)
+  Future<void> addTrainingEntry() async {
     _entries.add(TrainingEntry(excercise: null, repeats: 0));
     notifyListeners();
   }
 
-//удалить drop
-  void removeTrainingEntry(int index) {
+//удалить пустую тренировку drop
+  Future<void> removeTrainingEntry(int index) async {
     _entries.removeAt(index);
     notifyListeners();
   }
 
   List<TrainingEntry> get entries => _entries;
 
-//сохраненить тренировку
-  Training? _create() {
+//создать тренировку
+  Future<Training?> _create() async {
     final valid =
         _entries.where((x) => x.excercise != null && x.repeats! > 0).toList();
 
     if (valid.isEmpty) {
       return null;
     }
+    //создать тренировку в бд
+    final trainingCompanion = await database
+        .into(database.trainingData)
+        .insertReturning(TrainingDataCompanion(date: Value(DateTime.now())));
+//создать подходы в бд
+    for (var approach in valid) {
+      await database.into(database.approachData).insert(
+          ApproachDataCompanion.insert(
+              trainingId: trainingCompanion.id,
+              exerciseId: approach.excercise!.id,
+              repeats: approach.repeats!));
+    }
 
+//создать подходы в ui
     final approaches = valid
         .map((entry) =>
             Approach(excercise: entry.excercise!, repeats: entry.repeats!))
         .toList();
 
     final training = Training(
-        date: DateTime.now(),
+        date: trainingCompanion.date,
         approach: approaches,
-        id: DateTime.now().millisecondsSinceEpoch);
+        id: trainingCompanion.id);
     return training;
   }
 
-  void save() {
-    final training = _create();
+//сохранить тренировку
+  Future<void> save() async {
+    final training = await _create();
     if (training != null) {
-      trainingsScreenViewModel.value.add(training);
+      trainingsScreenViewModel.value = [
+        ...trainingsScreenViewModel.value,
+        training
+      ];
     }
   }
 }
