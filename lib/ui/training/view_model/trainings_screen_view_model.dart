@@ -1,31 +1,90 @@
+import 'package:drift/drift.dart';
 import 'package:flutter/material.dart';
+import 'package:training_note/data/database.dart';
 import 'package:training_note/domain/models/approach.dart';
+import 'package:training_note/domain/models/exercise.dart';
 import 'package:training_note/domain/models/training.dart';
 
 class TrainingsScreenViewModel extends ValueNotifier<List<Training>> {
-  TrainingsScreenViewModel(super._value);
+  TrainingsScreenViewModel(super._value, {required this.database});
+  final AppDatabase database;
 
-  void createTrainigs(DateTime date, List<Approach> approach) {
+//загрузка
+  Future<void> load() async {
+    final exercises = await database.select(database.exerciseData).get();
+    final trainings = await database.select(database.trainingData).get();
+    final approaches = await database.select(database.approachData).get();
+    final Map<int, Exercise> exercisesMap = {
+      for (var e in exercises) e.id: Exercise(id: e.id, name: e.name),
+    };
+    final Map<int, List<Approach>> approachesByID = {};
+    for (var approachData in approaches) {
+      final exercise = exercisesMap[approachData.exerciseId];
+      if (exercise != null) {
+        final approach = Approach(
+          excercise: exercise,
+          repeats: approachData.repeats,
+        );
+
+        approachesByID
+            .putIfAbsent(approachData.trainingId, () => [])
+            .add(approach);
+      }
+    }
+
+    value = trainings.map((e) {
+      final approach = approachesByID[e.id] ?? [];
+      return Training(id: e.id, date: e.date, approach: approach);
+    }).toList();
+  }
+
+//создать
+  Future<void> create(List<Approach> approaches) async {
+    final insectRowTraining = await database
+        .into(database.trainingData)
+        .insertReturning(TrainingDataCompanion(date: Value(DateTime.now())));
+
+    for (var approach in approaches) {
+      await database.into(database.approachData).insert(
+          ApproachDataCompanion.insert(
+              trainingId: insectRowTraining.id,
+              exerciseId: approach.excercise.id,
+              repeats: approach.repeats));
+    }
     final newTraining = Training(
-        date: date,
-        approach: approach,
-        id: DateTime.now().microsecondsSinceEpoch);
+        date: insectRowTraining.date,
+        approach: approaches,
+        id: insectRowTraining.id);
     value = [...value, newTraining];
   }
 
-  void addTraining(Training training) {
-    value = [...value, training];
+  Future<void> updateTraining(
+      DateTime date, List<Approach> approaches, int id) async {
+    for (var approach in approaches) {
+      database.into(database.approachData).insert(ApproachDataCompanion.insert(
+          trainingId: id,
+          exerciseId: approach.excercise.id,
+          repeats: approach.repeats));
+    }
+// обновить UI
+    final index = value.indexWhere((e) => e.id == id);
+    final updated = value[index].copyWith(date: date, approach: approaches);
+    final newList = [...value];
+    newList[index] = updated;
+    value = newList;
   }
-  // void updateTraining(DateTime date, List<Approach> approach, int id) {
-  //   final index = value.indexWhere((e) => e.id == id);
-  //.  approach еще обновить
-  //   final updated = value[index].copyWith(date: date, approach: approach);
-  //   final newList = [...value];
-  //   newList[index] = updated;
-  //   value = newList;
-  // }
 
-  void deleteTraining(int id) {
+//удаление
+  Future<void> deleteTraining(int id) async {
+    //удалить связанныые подходы
+    final deleteApproach = database.delete(database.approachData)
+      ..where((t) => t.trainingId.equals(id));
+    await deleteApproach.go();
+    //удалить тренировку по id
+    final trackedId = database.delete(database.trainingData)
+      ..where((t) => t.id.equals(id));
+    await trackedId.go();
+    //обновить ui
     value = value.where((e) => e.id != id).toList();
   }
 }
