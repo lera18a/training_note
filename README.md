@@ -31,6 +31,7 @@ dart run build_runner build
 <img width="487" height="296" alt="image" src="https://github.com/user-attachments/assets/d8f3b81a-923a-4597-bf58-740e5ae71b25" />
 
 ## Модели
-<img width="565" height="383" alt="image" src="https://github.com/user-attachments/assets/6b00a3b9-322b-48e1-b201-aea738f47246" />
+<img width="715" height="473" alt="image" src="https://github.com/user-attachments/assets/def3edcb-dd9a-4524-aa84-dbab4c9f313b" />
+
 
 
