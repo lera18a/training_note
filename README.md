@@ -28,7 +28,7 @@ dart run build_runner build
 <img width="918" height="552" alt="image" src="https://github.com/user-attachments/assets/27a3d34c-7aed-4b3f-9966-be83bc66835d" />
 
 ## Зависимости
-<img width="487" height="296" alt="image" src="https://github.com/user-attachments/assets/d8f3b81a-923a-4597-bf58-740e5ae71b25" />
+<img width="482" height="321" alt="image" src="https://github.com/user-attachments/assets/fdf50c69-f40e-4752-9215-5340f04eeaae" />
 
 ## Модели
 <img width="715" height="473" alt="image" src="https://github.com/user-attachments/assets/def3edcb-dd9a-4524-aa84-dbab4c9f313b" />
